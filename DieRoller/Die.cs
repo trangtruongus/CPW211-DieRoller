@@ -5,13 +5,15 @@
     /// </summary>
     public class Die
     {
+        private static Random _random;
+
         /// <summary>
         /// Creates the die and rolls it to start with
         /// a random number
         /// </summary>
-        public Die()
+        static Die()
         {
-            Roll();
+            _random = new Random();
         }
 
         /// <summary>
@@ -26,17 +28,22 @@
 
         /// <summary>
         /// Rolls the die and sets the <see cref="FaceValue"/>
-        /// to the new number. Returns the new number
+        /// to the new number if the die is not currently held. 
+        /// Returns the <see cref="FaceValue"/>c
         /// </summary>
-        /// <returns>Returns the new random number</returns>
+        /// to the new number if the die is not currently held. 
+        /// Returns the <see cref="FaceValue"/>
         public byte Roll()
         {
             // Generate random number
-            Random random = new Random();
-            byte newValue = (byte)random.Next(1, 7);
+            if (!IsHeld)
+            {
+                // Generate random number
+                Random random = new();
+                byte newValue = (byte)_random.Next(1, 7);
 
-            FaceValue = newValue;
-
+                FaceValue = newValue;
+            }
             return FaceValue;
         }
     }
